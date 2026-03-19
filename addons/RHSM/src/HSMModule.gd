@@ -1,4 +1,3 @@
-@abstract
 class_name HSMModule extends HSMBranch
 ## An extra node that will run when it's parent [HSMNode] is run.
 ## [br][br]

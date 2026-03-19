@@ -1,17 +1,10 @@
-@abstract
 class_name HSMNode extends HSMBranch
 ## The basic node for all state logic. Must be a child to a [HSMBase]
 ## node to work.
 
 
 #region Private Signals
-signal entered
-signal exited
-#endregion
-
-
-#region Private Signals
-var _request_change := Signal()
+signal _request_change
 #endregion
 
 
@@ -39,10 +32,13 @@ func _enter_modules() -> void:
 	for module : HSMModule in _modules:
 		module._actor = _actor
 		module._context = _context
+		
 		module.enter_module(_actor, _context)
+		module.entered.emit()
 func _exit_modules() -> void:
 	for module : HSMModule in _modules:
 		module.exit_module(_actor, _context)
+		module.exited.emit()
 
 func _get_modules() -> Array[HSMModule]:
 	return _modules

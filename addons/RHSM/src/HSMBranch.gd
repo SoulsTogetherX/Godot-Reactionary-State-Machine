@@ -4,6 +4,14 @@ class_name HSMBranch extends HSMBase
 ## node to work.
 
 
+#region Private Signals
+## A signal emitted after this branch is entered
+signal entered
+## A signal emitted after this branch is exited
+signal exited
+#endregion
+
+
 #region Private Variables
 var _context : HSMContext
 var _actor : Node

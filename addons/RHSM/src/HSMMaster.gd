@@ -200,20 +200,20 @@ func _add_to_queue(state : HSMBranch) -> void:
 	
 	if state is HSMNode:
 		for module : HSMModule in state._get_modules():
-			_add_to_queue(state)
+			_add_to_queue(module)
 #endregion
 
 
 #region Private Methods (Propagates)
 func _propagate_parent(bottom : HSMBase) -> void:
 	for node : Node in bottom.get_children():
-		if node is HSMBranch:
+		if node is HSMNode:
 			node._parent = bottom
 			node._register_modules()
 			_propagate_parent(node)
 func _propagate_info(bottom : HSMBase) -> void:
 	for node : Node in bottom.get_children():
-		if node is HSMBranch:
+		if node is HSMNode:
 			node._context = context
 			node._actor = actor
 			node._update_modules_info()
