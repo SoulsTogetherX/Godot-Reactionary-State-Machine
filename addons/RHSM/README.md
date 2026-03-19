@@ -10,9 +10,14 @@ Here is an alternative I plan to use in my projects.
 
 This state machine can be separated into three main components.
 
+* HSMMaster
 * HSMNode
 * HSMModule
 * HSMContext
+
+### HSMMaster
+
+HSMMaster is the root of any state machine. Within here all calculates are processed and where state changes occur.
 
 ### HSMNode
 
