@@ -10,10 +10,10 @@ Here is an alternative I plan to use in my projects.
 
 This state machine can be separated into three main components.
 
-* HSMMaster
-* HSMNode
-* HSMModule
-* HSMContext
+- HSMMaster
+- HSMNode
+- HSMModule
+- HSMContext
 
 ### HSMMaster
 
@@ -45,9 +45,33 @@ These should be your primary method of state communication, as well as facilitat
 
 ## Efficency Measures
 
-Each HSMNode and HSMModule node possess the method _get_process_requirements(). Via overloading this, you can tell the state machine what methods this method need to be called at relevant times. This drastically reduces overhead of having multiple unneeded functions be called, for each state, per frame.
+Each HSMNode and HSMModule node possess the method \_get_process_requirements(). Via overloading this, you can tell the state machine what methods this method need to be called at relevant times. This drastically reduces overhead of having multiple unneeded functions be called, for each state, per frame.
 
 The enter and exit method of each HSMNode and HSMModule node are only called when required too. If the new state shares ancestors, those ancestors will not be exited and reentered.
+
+## Why this over a regular State Machine?
+
+Hierarchical state machines are a more advanced type of state machine that reduces complexity.
+
+To put it another way, using this addon will allow you group up states together to run the same code. Each state ends up being a single module to an entire structure.
+
+For example, let's imagine a character controller that has three main states. "Idle", "Running", and "Jumping".
+
+In the "Idle" and "Running", you obviously want to be able to transition to "Jumping" whenever needed. In a traditional state machine, you'd need to add a method to transition to "Jumping" in both Idle and Running whenever you press the "jump" button. The same for the "jump" state whenever you hit the ground.
+
+This is fine, but what happens when you want to add a "Falling" state next? What about a "Grounded Attack" and "InAir Attack" state? What about a "Hit" state? A "Dead" state?
+
+The more states you add, the exponentially more conditions and transitions you have to add to each relevant state in the state machine. That's O(n^2) number of transitions in the worst case, and it'll affect your performance if you are checking them all every frame. Eventually, with this method, it'll be easier if everything wasn't self-contained. This results in...a mess of unreadable stringed connections.
+
+Meanwhile, a hierarchical state machine can group-up related states together.
+
+For example, all "Grounded" states ("Idle", "Running", "Grounded Attack", "Slowdown", etc.) can have all their transitions in a parent state.
+
+Then, inside the "Grounded" parent state, you can use the "passthrough_state" method to decide what "Grounded" state you should go to at any one time, if another state requests to transition to a "Grounded" state.
+
+To further reduce complexity, you can also use "modules." For example, adding a "Gravity" module as a child to the "InAir" state will **not only** improve readability but will also improve performance when not in the air. Adding an "Animation Change" module as a child to your states will also prevent the need to constantly write redudant references to the AnimationPlayer in your code. Etc.
+
+It overall improves your workflow with EXTREMELY LOW cost on your performance. Plus, if you want, you can also use it like a normal state machine.
 
 ## Known Issues
 
