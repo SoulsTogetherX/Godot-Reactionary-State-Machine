@@ -177,6 +177,8 @@ func force_all_action_signals() -> void:
 
 #region Inner Classes
 ## An action class used by [HSMContext] nodes.
+## [br][br]
+## Useful for states, like in_air or jumping, and player controls.
 class Action:
 	## A signal that is emited when an action is toggled on when previously off.
 	## [br][br]
@@ -220,6 +222,8 @@ class Action:
 		action_changed.emit(action_name, toggle)
 
 ## A value holder class used by [HSMContext] nodes.
+## [br][br]
+## Useful for enum checks and memory transfer between states.
 class Value:
 	## The name of the value
 	var value_name : StringName
