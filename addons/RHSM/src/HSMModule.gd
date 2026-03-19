@@ -1,6 +1,6 @@
 @abstract
 class_name HSMModule extends HSMBranch
-## An extra node that will run when it's parent [HSMBranch] is run.
+## An extra node that will run when it's parent [HSMNode] is run.
 ## [br][br]
 ## Used for repeatable logic to be shared in multiple states.
 
