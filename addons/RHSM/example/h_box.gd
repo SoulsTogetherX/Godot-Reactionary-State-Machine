@@ -5,7 +5,7 @@ extends HBoxContainer
 @onready var col_3: MarginContainer = $Col3
 
 
-@onready var _hsm_context: HSMContext = $HSMContext
+@onready var _hsm_context: RHSMContext = $HSMContext
 
 
 

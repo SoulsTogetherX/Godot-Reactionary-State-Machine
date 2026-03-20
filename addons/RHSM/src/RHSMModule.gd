@@ -1,4 +1,4 @@
-class_name HSMModule extends HSMBranch
+class_name RHSMModule extends RHSMBranch
 ## An extra node that will run when it's parent [HSMNode] is run.
 ## [br][br]
 ## Used for repeatable logic to be shared in multiple states.
@@ -13,7 +13,7 @@ class_name HSMModule extends HSMBranch
 ## [br][br]
 ## [b]NOTE[/b]: In the state machine hierarchy, The topmost [HSMModule]
 ## nodes in the tree will be processed first.
-func enter_module(act : Node, ctx : HSMContext) -> void:
+func enter_module(act : Node, ctx : RHSMContext) -> void:
 	pass
 ## A virtual method that runs BEFORE the moment their parent [HSMNode] node
 ## is exited via the relevant [HSMMaster].
@@ -23,6 +23,6 @@ func enter_module(act : Node, ctx : HSMContext) -> void:
 ## [br][br]
 ## [b]NOTE[/b]: In the state machine hierarchy, The topmost [HSMModule]
 ## nodes in the tree will be processed first.
-func exit_module(act : Node, ctx : HSMContext) -> void:
+func exit_module(act : Node, ctx : RHSMContext) -> void:
 	pass
 #endregion

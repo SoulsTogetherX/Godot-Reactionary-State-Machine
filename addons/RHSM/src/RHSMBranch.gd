@@ -1,5 +1,5 @@
 @abstract
-class_name HSMBranch extends HSMBase
+class_name RHSMBranch extends RHSMBase
 ## The basic node for all state logic. Must be a child to a [HSMBase]
 ## node to work.
 
@@ -13,7 +13,7 @@ signal exited
 
 
 #region Private Variables
-var _context : HSMContext
+var _context : RHSMContext
 var _actor : Node
 #endregion
 
@@ -111,7 +111,7 @@ func value_changed(value_name : StringName, val : Variant) -> void:
 ## [br][br]
 ## [b]NOTE[/b]: Attempting to call this when [method is_running] is
 ## [code]false[/code] will result in undefined behavior.
-func get_context() -> HSMContext:
+func get_context() -> RHSMContext:
 	return _context
 ## Returns the current actor of the relevant [HSMMaster].
 ## [br][br]

@@ -1,4 +1,4 @@
-class_name HSMMaster extends HSMBase
+class_name RHSMMaster extends RHSMBase
 ## The node that uses [HSMNode] and [HSMModule] children in order to
 ## create a state machine hierarchy.
 ## [br][br]
@@ -10,9 +10,9 @@ class_name HSMMaster extends HSMBase
 #region External Variables
 @export_group("Nodes")
 ## The starting state this state machine will start from.
-@export var starting_state : HSMNode
+@export var starting_state : RHSMNode
 ## The context object that will be provided to all states.
-@export var context : HSMContext:
+@export var context : RHSMContext:
 	set = _set_context
 ## The actor object that will be provided to all states.
 @export var actor : Node:
@@ -33,19 +33,19 @@ class_name HSMMaster extends HSMBase
 
 #region Private Variables
 # Highest Node in the tree hierarchy
-var _top : HSMBase
+var _top : RHSMBase
 # Lowest Node in the tree hierarchy
-var _bottom : HSMBase
+var _bottom : RHSMBase
 
-var _process_queue : Array[HSMBranch]
-var _physic_queue : Array[HSMBranch]
-var _input_queue : Array[HSMBranch]
+var _process_queue : Array[RHSMBranch]
+var _physic_queue : Array[RHSMBranch]
+var _input_queue : Array[RHSMBranch]
 
-var _action_started_queue : Array[HSMBranch]
-var _action_finished_queue : Array[HSMBranch]
+var _action_started_queue : Array[RHSMBranch]
+var _action_finished_queue : Array[RHSMBranch]
 
-var _action_changed_queue : Array[HSMBranch]
-var _value_changed_queue : Array[HSMBranch]
+var _action_changed_queue : Array[RHSMBranch]
+var _value_changed_queue : Array[RHSMBranch]
 
 var _swapped_hault : bool = false
 #endregion
@@ -60,37 +60,37 @@ func _ready() -> void:
 
 #region Action Methods
 func _process(delta: float) -> void:
-	for state : HSMBranch in _process_queue:
+	for state : RHSMBranch in _process_queue:
 		state.process_frame(delta)
 func _physics_process(delta: float) -> void:
-	for state : HSMBranch in _physic_queue:
+	for state : RHSMBranch in _physic_queue:
 		state.process_physics(delta)
 func _unhandled_input(event: InputEvent) -> void:
-	for state : HSMBranch in _input_queue:
+	for state : RHSMBranch in _input_queue:
 		state.process_input(event)
 
 func _action_started(action_name : StringName) -> void:
-	for state : HSMBranch in _action_started_queue:
+	for state : RHSMBranch in _action_started_queue:
 		state.action_started(action_name)
 func _action_finished(action_name : StringName) -> void:
-	for state : HSMBranch in _action_finished_queue:
+	for state : RHSMBranch in _action_finished_queue:
 		state.action_finished(action_name)
 
 func _action_changed(action_name : StringName, val : bool) -> void:
-	for state : HSMBranch in _action_changed_queue:
+	for state : RHSMBranch in _action_changed_queue:
 		state.action_changed(action_name, val)
 func _value_changed(value_name : StringName, val : Variant) -> void:
-	for state : HSMBranch in _value_changed_queue:
+	for state : RHSMBranch in _value_changed_queue:
 		state.value_changed(value_name, val)
 #endregion
 
 
 #region Private Methods (Helper)
-func _set_context(val : HSMContext) -> void:
+func _set_context(val : RHSMContext) -> void:
 	if val == context:
 		return
 	if val == null:
-		val = HSMContext.new()
+		val = RHSMContext.new()
 	if context != null:
 		_set_action_started(false)
 		_set_action_finished(false)
@@ -138,7 +138,7 @@ func _set_value_changed(toggle : bool) -> void:
 	if context.value_changed.is_connected(_value_changed):
 		context.value_changed.disconnect(_value_changed)
 
-func _set_request_change(state : HSMNode, toggle : bool) -> void:
+func _set_request_change(state : RHSMNode, toggle : bool) -> void:
 	if toggle:
 		if !state._request_change.is_connected(change_state):
 			state._request_change.connect(change_state, CONNECT_DEFERRED)
@@ -171,7 +171,7 @@ func _clear_queues() -> void:
 	
 	_action_changed_queue.clear()
 	_value_changed_queue.clear()
-func _add_to_queue(state : HSMBranch) -> void:
+func _add_to_queue(state : RHSMBranch) -> void:
 	var requirements := state._get_process_requirements()
 	var handled : Dictionary
 	
@@ -198,28 +198,28 @@ func _add_to_queue(state : HSMBranch) -> void:
 			PROCESS_REQUIREMENTS.VALUE_CHANGED:
 				_value_changed_queue.append(state)
 	
-	if state is HSMNode:
-		for module : HSMModule in state._get_modules():
+	if state is RHSMNode:
+		for module : RHSMModule in state._get_modules():
 			_add_to_queue(module)
 #endregion
 
 
 #region Private Methods (Propagates)
-func _propagate_parent(bottom : HSMBase) -> void:
+func _propagate_parent(bottom : RHSMBase) -> void:
 	for node : Node in bottom.get_children():
-		if node is HSMNode:
+		if node is RHSMNode:
 			node._parent = bottom
 			node._register_modules()
 			_propagate_parent(node)
-func _propagate_info(bottom : HSMBase) -> void:
+func _propagate_info(bottom : RHSMBase) -> void:
 	for node : Node in bottom.get_children():
-		if node is HSMNode:
+		if node is RHSMNode:
 			node._context = context
 			node._actor = actor
 			node._update_modules_info()
 			_propagate_info(node)
 
-func _propagate_child(new_state : HSMBase) -> void:
+func _propagate_child(new_state : RHSMBase) -> void:
 	var parent := new_state._parent
 	while parent:
 		if parent._child != new_state:
@@ -233,7 +233,7 @@ func _propagate_enter_state() -> void:
 	if _top == null:
 		return
 		
-	var top : HSMNode = self._child
+	var top : RHSMNode = self._child
 	# Adds needed to queue again
 	while top && top != _top._child:
 		_add_to_queue(top)
@@ -252,7 +252,7 @@ func _propagate_enter_state() -> void:
 		
 		top = top._child
 func _propagate_exit_state() -> void:
-	var bottom : HSMBase = _bottom
+	var bottom : RHSMBase = _bottom
 	while bottom:
 		if bottom == _top:
 			return
@@ -274,7 +274,7 @@ func _propagate_exit_state() -> void:
 ## [br][br]
 ## [b]NOTE[/b]: It is not recomended to use this method often, as it is
 ## performance intensive for large machines.
-func initializes_machine(inital_state : HSMNode) -> void:
+func initializes_machine(inital_state : RHSMNode) -> void:
 	_top = self
 	_bottom = self
 	
@@ -288,12 +288,12 @@ func initializes_machine(inital_state : HSMNode) -> void:
 ## [b]NOTE[/b]: This method will first cycle through
 ## [method HSMNode.passthrough_state] before transitioning. If an
 ## infinite loop is detect, then this state chance is cancled.
-func change_state(new_state : HSMNode) -> void:
+func change_state(new_state : RHSMNode) -> bool:
 	if disabled:
-		return
+		return false
 	
 	# Goes through passthrough
-	var check_state : HSMNode = new_state
+	var check_state : RHSMNode = new_state
 	while check_state:
 		new_state = check_state
 		check_state = check_state.passthrough_state(actor, context)
@@ -302,9 +302,20 @@ func change_state(new_state : HSMNode) -> void:
 		# Avoids infinite loop.
 		if _bottom == new_state && check_state != null:
 			push_error("Possible Infinite State Loop Found")
-			return
+			return false
 	if _bottom == new_state:
-		return
+		return false
+	
+	if new_state == null:
+		push_warning("Attempted to transition to a 'null' instead of a vaild RHSMNode.")
+		_propagate_exit_state()
+		_clear_queues()
+		_update_processing()
+		_update_contexting()
+		return true
+	if !new_state.safe_guard(actor, context):
+		return false
+	
 	_propagate_child(new_state)
 	
 	_propagate_exit_state()
@@ -316,4 +327,5 @@ func change_state(new_state : HSMNode) -> void:
 	
 	_update_processing()
 	_update_contexting()
+	return true
 #endregion

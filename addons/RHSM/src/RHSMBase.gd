@@ -1,5 +1,5 @@
 @abstract
-class_name HSMBase extends Node
+class_name RHSMBase extends Node
 ## The Abstract Class for all Hierarchical State Machine nodes.
 
 
@@ -19,6 +19,6 @@ enum PROCESS_REQUIREMENTS {
 
 
 #region Private Variables
-var _parent : HSMBase
-var _child : HSMBase
+var _parent : RHSMBase
+var _child : RHSMBase
 #endregion

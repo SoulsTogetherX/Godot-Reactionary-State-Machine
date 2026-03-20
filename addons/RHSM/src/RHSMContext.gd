@@ -1,4 +1,4 @@
-class_name HSMContext extends Node
+class_name RHSMContext extends Node
 ## The node holds the context that is used and passed through [HSMMaster] nodes.
 ## [br][br]
 ## It is used to transfer information between states, state machines, and

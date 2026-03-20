@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://xh3prnr2leoh"]
 
-[ext_resource type="Script" uid="uid://6hg6o4escfno" path="res://addons/RHSM/src/HSMContext.gd" id="1_qh6ir"]
-[ext_resource type="Script" uid="uid://cn1lche2a867t" path="res://addons/RHSM/src/HSMMaster.gd" id="2_fiawj"]
+[ext_resource type="Script" uid="uid://6hg6o4escfno" path="res://addons/RHSM/src/RHSMContext.gd" id="1_qh6ir"]
+[ext_resource type="Script" uid="uid://cn1lche2a867t" path="res://addons/RHSM/src/RHSMMaster.gd" id="2_fiawj"]
 [ext_resource type="Script" uid="uid://cq47sdoxpf16c" path="res://addons/RHSM/example/src/states/hsm_fade_transparent.gd" id="3_hjddr"]
 [ext_resource type="Script" uid="uid://cyovwsulgyere" path="res://addons/RHSM/example/src/states/hsm_transition.gd" id="3_w3muq"]
 [ext_resource type="Script" uid="uid://bst6yv4hfxrta" path="res://addons/RHSM/example/src/states/hsm_col1.gd" id="4_7l6p2"]
@@ -37,14 +37,15 @@ context = NodePath("../HSMContext")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cn1lche2a867t"
 
-[node name="Transition" type="Node" parent="HBox/HSMMaster" unique_id=736591401 node_paths=PackedStringArray("col_1_state", "col_2_state", "col_3_state")]
+[node name="Transition" type="Node" parent="HBox/HSMMaster" unique_id=736591401 node_paths=PackedStringArray("col_3_state", "fade_transparent")]
 script = ExtResource("3_w3muq")
-col_1_state = NodePath("FadeTransparent/Col1")
-col_2_state = NodePath("FadeTransparent/Col2")
 col_3_state = NodePath("Col3")
+fade_transparent = NodePath("FadeTransparent")
 
-[node name="FadeTransparent" type="Node" parent="HBox/HSMMaster/Transition" unique_id=931989966]
+[node name="FadeTransparent" type="Node" parent="HBox/HSMMaster/Transition" unique_id=931989966 node_paths=PackedStringArray("col_1_state", "col_2_state")]
 script = ExtResource("3_hjddr")
+col_1_state = NodePath("Col1")
+col_2_state = NodePath("Col2")
 
 [node name="Col1" type="Node" parent="HBox/HSMMaster/Transition/FadeTransparent" unique_id=1687528194]
 script = ExtResource("4_7l6p2")
