@@ -3,17 +3,20 @@ class_name RHSMNode extends RHSMBranch
 ## node to work.
 
 
-#region Private Signals
-signal _request_change
-#endregion
-
-
 #region Private Variables
 var _running : bool
 
 var _modules : Array[RHSMModule]
 #endregion
 
+
+
+#region Virtual Methods
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_READY:
+			_settup_private_signals()
+#endregion
 
 
 #region Private Methods (Module)
@@ -42,6 +45,14 @@ func _exit_modules() -> void:
 
 func _get_modules() -> Array[RHSMModule]:
 	return _modules
+#endregion
+
+
+
+#region Private Methods (Helper)
+func _settup_private_signals() -> void:
+	if !has_signal(_REQUEST_STATE_CHANGE_SIGNAL_NAME):
+		add_user_signal(_REQUEST_STATE_CHANGE_SIGNAL_NAME)
 #endregion
 
 
@@ -108,7 +119,9 @@ func passthrough_state(act : Node, ctx : RHSMContext) -> RHSMNode:
 ## first. If that method returns another [HSMNode], then [HSMMaster] to
 ## change to that state instead.
 func change_state(state : RHSMNode) -> void:
-	_request_change.emit(state)
+	emit_signal(
+		_REQUEST_STATE_CHANGE_SIGNAL_NAME, state
+	)
 #endregion
 
 

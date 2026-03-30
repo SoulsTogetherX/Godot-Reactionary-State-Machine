@@ -140,11 +140,19 @@ func _set_value_changed(toggle : bool) -> void:
 
 func _set_request_change(state : RHSMNode, toggle : bool) -> void:
 	if toggle:
-		if !state._request_change.is_connected(change_state):
-			state._request_change.connect(change_state, CONNECT_DEFERRED)
+		if !state.is_connected(
+			_REQUEST_STATE_CHANGE_SIGNAL_NAME, change_state
+		):
+			state.connect(
+				_REQUEST_STATE_CHANGE_SIGNAL_NAME, change_state, CONNECT_DEFERRED
+			)
 		return
-	if state._request_change.is_connected(change_state):
-		state._request_change.disconnect(change_state)
+	if state.is_connected(
+		_REQUEST_STATE_CHANGE_SIGNAL_NAME, change_state
+	):
+		state.disconnect(
+			_REQUEST_STATE_CHANGE_SIGNAL_NAME, change_state
+		)
 
 
 func _update_processing() -> void:

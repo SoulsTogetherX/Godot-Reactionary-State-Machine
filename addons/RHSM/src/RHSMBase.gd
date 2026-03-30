@@ -18,6 +18,11 @@ enum PROCESS_REQUIREMENTS {
 #endregion
 
 
+#region Private Constants
+const _REQUEST_STATE_CHANGE_SIGNAL_NAME := &"_REQUEST_STATE_CHANGE_SIGNAL_NAME"
+#endregion
+
+
 #region Private Variables
 var _parent : RHSMBase
 var _child : RHSMBase
