@@ -12,10 +12,8 @@ var _modules : Array[RHSMModule]
 
 
 #region Virtual Methods
-func _notification(what: int) -> void:
-	match what:
-		NOTIFICATION_READY:
-			_settup_private_signals()
+func _init() -> void:
+	_settup_private_signals()
 #endregion
 
 
