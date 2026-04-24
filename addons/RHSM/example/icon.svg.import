@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtcuuta3j78ay"
-path="res://.godot/imported/HSMModule.svg-ac2a2d4cff5d8c31fdae7df96ac010c7.ctex"
+uid="uid://ckm4yvicrfy2s"
+path="res://.godot/imported/icon.svg-93b8feb661f62176ae7e6b72b15119f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/RHSM/assets/HSMModule.svg"
-dest_files=["res://.godot/imported/HSMModule.svg-ac2a2d4cff5d8c31fdae7df96ac010c7.ctex"]
+source_file="res://addons/RHSM/example/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-93b8feb661f62176ae7e6b72b15119f8.ctex"]
 
 [params]
 

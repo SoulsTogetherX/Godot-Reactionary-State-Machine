@@ -1,5 +1,5 @@
 class_name RHSMContext extends Node
-## The node holds the context that is used and passed through [HSMMaster] nodes.
+## The node holds the context that is used and passed through [RHSMMaster] nodes.
 ## [br][br]
 ## It is used to transfer information between states, state machines, and
 ## facilitate state changes.
@@ -145,7 +145,7 @@ func erase_value(value_name : StringName) -> void:
 #region Public Methods (Action Checks)
 ## Returns true if the action is toggled on. If the action does not exist,
 ## then [param default] is returned instead.
-func is_action(action_name : StringName, default : bool = false) -> bool:
+func get_action(action_name : StringName, default : bool = false) -> bool:
 	var idx := _get_action_index(action_name)
 	if idx == -1:
 		return default
@@ -176,7 +176,7 @@ func force_all_action_signals() -> void:
 
 
 #region Inner Classes
-## An action class used by [HSMContext] nodes.
+## An action class used by [RHSMContext] nodes.
 ## [br][br]
 ## Useful for states, like in_air or jumping, and player controls.
 class Action:
@@ -221,7 +221,7 @@ class Action:
 			action_finished.emit(action_name)
 		action_changed.emit(action_name, toggle)
 
-## A value holder class used by [HSMContext] nodes.
+## A value holder class used by [RHSMContext] nodes.
 ## [br][br]
 ## Useful for enum checks and memory transfer between states.
 class Value:

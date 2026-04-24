@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djekf463mguay"
-path="res://.godot/imported/HSMNode.svg-5cdb8fa6b70a5c1a22b01b61f59bb74d.ctex"
+uid="uid://dwxxew7u0rj2y"
+path="res://.godot/imported/RHSMBranch.svg-42f27f7153637c1f5448602f12cb7a9f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/RHSM/assets/HSMNode.svg"
-dest_files=["res://.godot/imported/HSMNode.svg-5cdb8fa6b70a5c1a22b01b61f59bb74d.ctex"]
+source_file="res://addons/RHSM/assets/RHSMBranch.svg"
+dest_files=["res://.godot/imported/RHSMBranch.svg-42f27f7153637c1f5448602f12cb7a9f.ctex"]
 
 [params]
 

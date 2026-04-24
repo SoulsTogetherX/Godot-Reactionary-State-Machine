@@ -1,8 +1,8 @@
 class_name RHSMMaster extends RHSMBase
-## The node that uses [HSMNode] and [HSMModule] children in order to
+## The node that uses [RHSMNode] and [RHSMModule] children in order to
 ## create a state machine hierarchy.
 ## [br][br]
-## [b]Note[/b]: Editing a State Machine's structure after [Node._ready]
+## [b]Note[/b]: Editing a State Machine's structure after [method Node._ready]
 ## will result in undefined behavior. Use [method initializes_machine]
 ## to ensure everything is working fine after tree editing.
 
@@ -329,6 +329,7 @@ func change_state(new_state : RHSMNode) -> bool:
 	_propagate_exit_state()
 	_clear_queues()
 	
+	print(new_state.name)
 	_bottom = new_state
 	_propagate_enter_state()
 	_action_finished_queue.reverse()

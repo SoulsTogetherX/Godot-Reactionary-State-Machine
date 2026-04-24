@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://bcpchb5bn6j56"]
+
+[ext_resource type="Texture2D" uid="uid://ckm4yvicrfy2s" path="res://addons/RHSM/example/icon.svg" id="1_8vl83"]
+[ext_resource type="Script" uid="uid://6hg6o4escfno" path="res://addons/RHSM/src/RHSMContext.gd" id="2_nxedl"]
+[ext_resource type="Script" uid="uid://cn1lche2a867t" path="res://addons/RHSM/src/RHSMMaster.gd" id="3_y7hx4"]
+[ext_resource type="Script" uid="uid://b3qq0uta0dnch" path="res://addons/RHSM/example/src/states/hsm_master_branch.gd" id="4_36y24"]
+[ext_resource type="Script" uid="uid://d3lbx6x36g5lm" path="res://addons/RHSM/example/src/states/airborn/hsm_airborn_branch.gd" id="5_0g211"]
+[ext_resource type="Script" uid="uid://ouvwrmrbv6uv" path="res://addons/RHSM/example/src/states/airborn/leafs/hsm_jump.gd" id="5_a87d7"]
+[ext_resource type="Script" uid="uid://y4ui85ghvo47" path="res://addons/RHSM/example/src/states/airborn/leafs/hsm_fall.gd" id="5_iej3x"]
+[ext_resource type="Script" uid="uid://da65k3uphpdqy" path="res://addons/RHSM/example/src/modules/hsm_gravity_module.gd" id="6_l7tjx"]
+[ext_resource type="Script" uid="uid://yytr7hv48f0w" path="res://addons/RHSM/example/src/modules/hsm_movement_module.gd" id="7_crl28"]
+[ext_resource type="Script" uid="uid://bfywxkk80bnwv" path="res://addons/RHSM/example/src/states/grounded/hsm_grounded_branch.gd" id="8_36y24"]
+[ext_resource type="Script" uid="uid://nn7kpdksgcc7" path="res://addons/RHSM/example/src/states/grounded/leafs/hsm_running.gd" id="9_l7tjx"]
+[ext_resource type="Script" uid="uid://f52ik2jq0j3c" path="res://addons/RHSM/example/src/states/grounded/stationary/hsm_stationary_branch.gd" id="10_d8oqq"]
+[ext_resource type="Script" uid="uid://doh1sw7gy812l" path="res://addons/RHSM/example/src/states/grounded/stationary/leafs/hsm_slowdown.gd" id="11_crl28"]
+[ext_resource type="Script" uid="uid://c0elefshkywa1" path="res://addons/RHSM/example/src/states/grounded/stationary/leafs/hsm_idle.gd" id="12_qjqh7"]
+[ext_resource type="Script" uid="uid://fccreaw5m0g6" path="res://addons/RHSM/example/src/modules/hsm_apply_velocity_module.gd" id="14_d8oqq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8vl83"]
+size = Vector2(128, 128)
+
+[node name="Player" type="CharacterBody2D" unique_id=226549301]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1687440365]
+texture = ExtResource("1_8vl83")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1406109368]
+shape = SubResource("RectangleShape2D_8vl83")
+
+[node name="RHSMContext" type="Node" parent="." unique_id=1432235400]
+script = ExtResource("2_nxedl")
+metadata/_custom_type_script = "uid://6hg6o4escfno"
+
+[node name="RHSMMaster" type="Node" parent="." unique_id=2095517305 node_paths=PackedStringArray("starting_state", "context", "actor")]
+script = ExtResource("3_y7hx4")
+starting_state = NodePath("Master")
+context = NodePath("../RHSMContext")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://cn1lche2a867t"
+
+[node name="Master" type="Node" parent="RHSMMaster" unique_id=661909959 node_paths=PackedStringArray("airborn_state", "grounded_state")]
+script = ExtResource("4_36y24")
+airborn_state = NodePath("Airborn")
+grounded_state = NodePath("Grounded")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="Airborn" type="Node" parent="RHSMMaster/Master" unique_id=364234147 node_paths=PackedStringArray("falling_state", "jumping_state")]
+script = ExtResource("5_0g211")
+falling_state = NodePath("Falling")
+jumping_state = NodePath("Jumping")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="GravityModule" type="Node" parent="RHSMMaster/Master/Airborn" unique_id=1576255509]
+script = ExtResource("6_l7tjx")
+metadata/_custom_type_script = "uid://te71xef3w38h"
+
+[node name="MovementModule" type="Node" parent="RHSMMaster/Master/Airborn" unique_id=26272481]
+script = ExtResource("7_crl28")
+metadata/_custom_type_script = "uid://te71xef3w38h"
+
+[node name="Falling" type="Node" parent="RHSMMaster/Master/Airborn" unique_id=2019387451]
+script = ExtResource("5_iej3x")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="Jumping" type="Node" parent="RHSMMaster/Master/Airborn" unique_id=62072625 node_paths=PackedStringArray("falling_state")]
+script = ExtResource("5_a87d7")
+falling_state = NodePath("../Falling")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="Grounded" type="Node" parent="RHSMMaster/Master" unique_id=1000228928 node_paths=PackedStringArray("jump_state", "running_state", "stationary_state")]
+script = ExtResource("8_36y24")
+jump_state = NodePath("../Airborn/Jumping")
+running_state = NodePath("Running")
+stationary_state = NodePath("Stationary")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="Running" type="Node" parent="RHSMMaster/Master/Grounded" unique_id=1699974852]
+script = ExtResource("9_l7tjx")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="MovementModule" type="Node" parent="RHSMMaster/Master/Grounded/Running" unique_id=1661624458]
+script = ExtResource("7_crl28")
+metadata/_custom_type_script = "uid://te71xef3w38h"
+
+[node name="Stationary" type="Node" parent="RHSMMaster/Master/Grounded" unique_id=1451253607 node_paths=PackedStringArray("slowdown_state", "idle_state")]
+script = ExtResource("10_d8oqq")
+slowdown_state = NodePath("Slowdown")
+idle_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="Slowdown" type="Node" parent="RHSMMaster/Master/Grounded/Stationary" unique_id=180400079 node_paths=PackedStringArray("idle_state")]
+script = ExtResource("11_crl28")
+idle_state = NodePath("../Idle")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="Idle" type="Node" parent="RHSMMaster/Master/Grounded/Stationary" unique_id=1236064043]
+script = ExtResource("12_qjqh7")
+metadata/_custom_type_script = "uid://dqceopkr2ry2y"
+
+[node name="ApplyVelocityModule" type="Node" parent="RHSMMaster/Master" unique_id=1094767653]
+script = ExtResource("14_d8oqq")
+metadata/_custom_type_script = "uid://te71xef3w38h"

@@ -4,8 +4,8 @@ class_name RHSMBase extends Node
 
 
 #region Enums
-## An eneum used to determine what processing mode the [HSMMaster] should
-## allow [HSMBranch] to use. This prevents unneeded method calling.
+## An eneum used to determine what processing mode the [RHSMMaster] should
+## allow [RHSMBranch] to use. This prevents unneeded method calling.
 enum PROCESS_REQUIREMENTS {
 	PROCESS_FRAME,
 	PROCESS_PHYSICS,
