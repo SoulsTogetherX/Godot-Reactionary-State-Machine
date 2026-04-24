@@ -22,7 +22,7 @@ func process_physics(_delta : float) -> void:
 #endregion
 
 
-#region Private Variable Methods
+#region Private Virtual Methods
 func _get_process_requirements() -> PackedInt32Array:
 	return [PROCESS_REQUIREMENTS.PROCESS_PHYSICS]
 #endregion
